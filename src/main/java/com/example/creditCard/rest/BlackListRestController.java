@@ -1,9 +1,15 @@
 package com.example.creditCard.rest;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,5 +27,16 @@ public class BlackListRestController {
 	public List<BlackList> retrieveAllBlackListCards(){
 		return blackListService.findAll();
 	}
+	
+	@GetMapping("/blacklist/{creditCardNumber}")
+	public EntityModel<BlackList> retrieveBlackListCard(@PathVariable String creditCardNumber) {
+		Optional<BlackList> blackList = blackListService.findById(creditCardNumber);
+		EntityModel<BlackList> resource = EntityModel.of(blackList.get());
+		WebMvcLinkBuilder linkTo = linkTo(methodOn(this.getClass()).retrieveAllBlackListCards());
+		resource.add(linkTo.withRel("all-managers"));
+		return resource;
+	}
+	
+	
 
 }
