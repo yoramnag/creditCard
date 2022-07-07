@@ -29,7 +29,7 @@ public class BlackListRestController {
 	}
 	
 	@GetMapping("/blacklist/{creditCardNumber}")
-	public EntityModel<BlackList> retrieveBlackListCard(@PathVariable String creditCardNumber) {
+	public EntityModel<BlackList> retrieveBlackListCard(@PathVariable int creditCardNumber) {
 		Optional<BlackList> blackList = blackListService.findById(creditCardNumber);
 		EntityModel<BlackList> resource = EntityModel.of(blackList.get());
 		WebMvcLinkBuilder linkTo = linkTo(methodOn(this.getClass()).retrieveAllBlackListCards());

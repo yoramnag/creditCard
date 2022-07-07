@@ -20,7 +20,7 @@ public class BlackListService {
 		return blackListRepository.findAll();
 	}
 	
-	public Optional<BlackList> findById(String cardNumber) {
+	public Optional<BlackList> findById(int cardNumber) {
 		Optional<BlackList> manager = blackListRepository.findById(cardNumber);
 		
 		if(!manager.isPresent()) {

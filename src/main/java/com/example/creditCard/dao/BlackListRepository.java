@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 import com.example.creditCard.entity.BlackList;
 
 @Repository
-public interface BlackListRepository extends JpaRepository<BlackList, String>{
+public interface BlackListRepository extends JpaRepository<BlackList, Integer>{
 
 }
