@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.creditCard.dao.TransactionsRepository;
 import com.example.creditCard.entity.Transactions;
+import com.example.creditCard.exception.BlackListCardNotFoundException;
 import com.example.creditCard.exception.TransactionsNotFoundException;
 
 @Service
@@ -33,6 +34,9 @@ public class TransactionsService {
 	
 	// Save new Transaction
 	public Transactions save (Transactions transactions) {
+		if (!Utils.luhnValidetor(transactions.getCreditCard())) {
+			throw new BlackListCardNotFoundException(transactions.getCreditCard() + "is not valid");
+		}
 		return transactionsRepository.save(transactions);
 	}
 	
