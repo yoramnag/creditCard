@@ -29,6 +29,21 @@ public class BlackListService {
 		return blackList;
 	}
 	
+	public BlackList saveblackListRepository (BlackList blackList) {
+		return blackListRepository.save(blackList);
+	}
 	
+	public boolean isBlaclListCardExist(int id) {
+		Optional<BlackList> BlackListCard = blackListRepository.findById(id);
+		
+		if(!BlackListCard.isPresent()) {
+			throw new BlackListCardNotFoundException("id - " + id);
+		}
+		return true;
+	}
+	
+	public void deleteBlaclListCard(int id) {
+		blackListRepository.deleteById(id);
+	}
 
 }
