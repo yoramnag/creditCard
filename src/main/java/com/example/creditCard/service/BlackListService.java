@@ -45,5 +45,15 @@ public class BlackListService {
 	public void deleteBlaclListCard(int id) {
 		blackListRepository.deleteById(id);
 	}
+	
+	public boolean findBlackListCard(String creditCardNumber){
+		
+		Optional<BlackList> blackList = blackListRepository.findByCreditCard(creditCardNumber);
+		if(!blackList.isPresent()) {
+			return false;
+		}
+		return true;
+	}
+	
 
 }

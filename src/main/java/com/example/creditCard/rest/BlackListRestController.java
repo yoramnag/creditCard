@@ -72,5 +72,12 @@ public class BlackListRestController {
 		}
 		return ResponseEntity.ok().build();
 	}
+	
+	@GetMapping("/blacklistCard")
+	public boolean findCreditCard(@Valid @RequestBody BlackList blackListCard) {
+		System.out.println("in findCreditCard");
+		return blackListService.findBlackListCard(blackListCard.getCreditCard());
+	}
+	
 
 }
