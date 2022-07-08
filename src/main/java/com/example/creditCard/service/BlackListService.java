@@ -20,13 +20,13 @@ public class BlackListService {
 		return blackListRepository.findAll();
 	}
 	
-	public Optional<BlackList> findById(int cardNumber) {
-		Optional<BlackList> manager = blackListRepository.findById(cardNumber);
+	public Optional<BlackList> findById(int id) {
+		Optional<BlackList> blackList = blackListRepository.findById(id);
 		
-		if(!manager.isPresent()) {
-			throw new BlackListCardNotFoundException("card number" + cardNumber + "was not found in bkack list");
+		if(!blackList.isPresent()) {
+			throw new BlackListCardNotFoundException("id - " + id);
 		}
-		return manager;
+		return blackList;
 	}
 	
 	

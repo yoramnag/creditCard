@@ -28,9 +28,9 @@ public class BlackListRestController {
 		return blackListService.findAll();
 	}
 	
-	@GetMapping("/blacklist/{creditCardNumber}")
-	public EntityModel<BlackList> retrieveBlackListCard(@PathVariable int creditCardNumber) {
-		Optional<BlackList> blackList = blackListService.findById(creditCardNumber);
+	@GetMapping("/blacklist/{id}")
+	public EntityModel<BlackList> retrieveBlackListCard(@PathVariable int id) {
+		Optional<BlackList> blackList = blackListService.findById(id);
 		EntityModel<BlackList> resource = EntityModel.of(blackList.get());
 		WebMvcLinkBuilder linkTo = linkTo(methodOn(this.getClass()).retrieveAllBlackListCards());
 		resource.add(linkTo.withRel("all-managers"));

@@ -24,7 +24,7 @@ public class Transactions {
 	private String creditCard;
 	
 	@Column(name="amount")
-	@Size(min=0,message="amount should be greater than 0 ")
+	@Size(min=1,message="amount should be greater than 1 ")
 	private double amount ;
 	
 	@CreationTimestamp
@@ -36,7 +36,7 @@ public class Transactions {
 	}
 
 	public Transactions(int id, @Size(min = 16, max = 16, message = "credit card size should be 16") String creditCard,
-			@Size(min = 0, message = "amount should be greater than 0 ") double amount, Date date) {
+			@Size(min = 1, message = "amount should be greater than 1 ") double amount, Date date) {
 		super();
 		this.id = id;
 		this.creditCard = creditCard;
