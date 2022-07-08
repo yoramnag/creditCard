@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -24,7 +25,7 @@ public class Transactions {
 	private String creditCard;
 	
 	@Column(name="amount")
-	@Size(min=1,message="amount should be greater than 1 ")
+	@DecimalMin(value = "1.0", message = "amount should be greater than 1")
 	private double amount ;
 	
 	@CreationTimestamp
@@ -36,7 +37,7 @@ public class Transactions {
 	}
 
 	public Transactions(int id, @Size(min = 16, max = 16, message = "credit card size should be 16") String creditCard,
-			@Size(min = 1, message = "amount should be greater than 1 ") double amount, Date date) {
+			@DecimalMin(value = "1.0", message = "amount should be greater than 1") double amount, Date date) {
 		super();
 		this.id = id;
 		this.creditCard = creditCard;

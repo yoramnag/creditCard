@@ -16,10 +16,12 @@ public class TransactionsService {
 	@Autowired
 	private TransactionsRepository transactionsRepository;
 	
+	// Return all Transactions
 	public List<Transactions> findAll(){
 		return transactionsRepository.findAll();
 	}
 	
+	//Return Transaction
 	public Optional<Transactions> findById(int id) {
 		Optional<Transactions> transactions = transactionsRepository.findById(id);
 		
@@ -28,5 +30,26 @@ public class TransactionsService {
 		}
 		return transactions;
 	}
+	
+	// Save new Transaction
+	public Transactions save (Transactions transactions) {
+		return transactionsRepository.save(transactions);
+	}
+	
+	// Delete Transaction
+	public void deleteTransaction(int id) {
+		transactionsRepository.deleteById(id);
+	}
+	
+	public boolean isTransactionExist(int id) {
+		Optional<Transactions> transactions = transactionsRepository.findById(id);
+		
+		if(!transactions.isPresent()) {
+			throw new TransactionsNotFoundException("id - " + id);
+		}
+		return true;
+	}
+	
+	
 
 }
