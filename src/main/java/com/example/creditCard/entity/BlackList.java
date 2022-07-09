@@ -16,7 +16,7 @@ public class BlackList {
 	private int id;
 	
 	@Column(name="credit_card")
-	@Size(min=16, max = 16 ,message="credit card size should be 16")
+	//@Size(min=16, max = 16 ,message="credit card size should be 16")
 	private String creditCard;
 
 	public BlackList() {
@@ -24,7 +24,7 @@ public class BlackList {
 		// TODO Auto-generated constructor stub
 	}
 
-	public BlackList(int id, @Size(min = 12, max = 12, message = "credit card size should be 12") String creditCard) {
+	public BlackList(int id, String creditCard) {
 		super();
 		this.id = id;
 		this.creditCard = creditCard;

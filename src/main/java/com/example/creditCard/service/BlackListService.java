@@ -33,6 +33,7 @@ public class BlackListService {
 		if (!Utils.luhnValidetor(blackList.getCreditCard())) {
 			throw new BlackListCardNotFoundException(blackList.getCreditCard() + "is not valid");
 		}
+		blackList.setCreditCard(Utils.maskCreditCard(blackList.getCreditCard()));
 		return blackListRepository.save(blackList);
 	}
 	
