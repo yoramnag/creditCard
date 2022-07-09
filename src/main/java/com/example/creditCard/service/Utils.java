@@ -42,5 +42,14 @@ public class Utils {
 		return "";
 		
 	}
+    
+    public static String mask(String creditCrard) {
+    	creditCrard = creditCrard.replace("-", "");
+    	int length = creditCrard.length() - creditCrard.length()/4;
+        String s = creditCrard.substring(0, length);
+        String res = s.replaceAll("[A-Za-z0-9]", "X") + creditCrard.substring(length);
+        return res;
+    	
+    }
 
 }

@@ -23,29 +23,32 @@ public class Transactions {
 	private int id;
 	
 	@Column(name="credit_card")
-	@Size(min=16, max = 16 ,message="credit card size should be 16")
 	private String creditCard;
 	
 	@Column(name="amount")
 	@DecimalMin(value = "1.0", message = "amount should be greater than 1")
 	private double amount ;
 	
-//	@CreationTimestamp
 	@Temporal(TemporalType.DATE)
 	private Date date;
+	
+	@Column(name="mask_credit_card")
+	private String maskCreditCard; 
 
 	public Transactions() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Transactions(int id, @Size(min = 16, max = 16, message = "credit card size should be 16") String creditCard,
-			@DecimalMin(value = "1.0", message = "amount should be greater than 1") double amount, Date date) {
+	public Transactions(int id, String creditCard,
+			@DecimalMin(value = "1.0", message = "amount should be greater than 1") double amount, Date date,
+			String maskCreditCard) {
 		super();
 		this.id = id;
 		this.creditCard = creditCard;
 		this.amount = amount;
 		this.date = date;
+		this.maskCreditCard = maskCreditCard;
 	}
 
 	public int getId() {
@@ -80,12 +83,18 @@ public class Transactions {
 		this.date = date;
 	}
 
+	public String getMaskCreditCard() {
+		return maskCreditCard;
+	}
+
+	public void setMaskCreditCard(String maskCreditCard) {
+		this.maskCreditCard = maskCreditCard;
+	}
+
 	@Override
 	public String toString() {
-		return "Transactions [id=" + id + ", creditCard=" + creditCard + ", amount=" + amount + ", date=" + date + "]";
+		return "Transactions [id=" + id + ", creditCard=" + creditCard + ", amount=" + amount + ", date=" + date
+				+ ", maskCreditCard=" + maskCreditCard + "]";
 	}
-	
-	
-
 	
 }

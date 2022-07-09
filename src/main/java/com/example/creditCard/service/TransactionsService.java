@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.creditCard.dao.TransactionsRepository;
+import com.example.creditCard.entity.BlackList;
 import com.example.creditCard.entity.Transactions;
 import com.example.creditCard.exception.BlackListCardNotFoundException;
 import com.example.creditCard.exception.FraudException;
@@ -21,7 +22,7 @@ public class TransactionsService {
 	@Autowired
 	private BlackListService blackListService;
 	
-	final int MAX_TRANSACTION_PER_A_DAY = 4;
+	final int MAX_TRANSACTION_PER_A_DAY = 5;
 	final double MAX_AMOUNT_PER_A_DAY = 3000;
 	
 	// Return all Transactions
@@ -50,6 +51,8 @@ public class TransactionsService {
 //		System.out.println(transactionsToday);
 //		List<Transactions> transactionsToday2 = transactionsRepository.findByDate(transactions.getDate());
 //		System.out.println(transactionsToday2);
+		transactions.setMaskCreditCard(Utils.mask(transactions.getCreditCard()));
+		transactions.setCreditCard(Utils.maskCreditCard(transactions.getCreditCard()));
 		return transactionsRepository.save(transactions);
 	}
 	
@@ -59,20 +62,25 @@ public class TransactionsService {
 		if(blackListService.findBlackListCard(transactions.getCreditCard())) {
 			throw new FraudException("transactions is not valid , card was found in black list !!!");
 		}
-		List<Transactions> transactionsToday = transactionsRepository.findByCreditCardAndDate(transactions.getCreditCard(), transactions.getDate());
-		if(transactionsToday.size() > MAX_TRANSACTION_PER_A_DAY) {
+		List<Transactions> transactionsToday = findByCreditCardAndDate(transactions);
+		if(transactionsToday.size()+1 == MAX_TRANSACTION_PER_A_DAY) {
 			throw new FraudException("transactions is not valid , card hes passed his max transactions per a day  ");
+		}
+		if(transactions.getAmount() >= MAX_AMOUNT_PER_A_DAY) {
+			throw new FraudException("transactions is not valid , card hes passed his max amount per a day  ");
 		}
 		if(transactionsToday.size() > 0) {
 			for (int i = 0; i < transactionsToday.size(); i++) {
 				sum = sum + transactionsToday.get(i).getAmount();
 			}
-			if (sum > MAX_AMOUNT_PER_A_DAY) {
+			if (sum >= MAX_AMOUNT_PER_A_DAY) {
 				throw new FraudException("transactions is not valid , card hes passed his max amount per a day  ");
 			}
 		}
 		
 	}
+	
+	
 
 	// Delete Transaction
 	public void deleteTransaction(int id) {
@@ -88,9 +96,16 @@ public class TransactionsService {
 		return true;
 	}
 	
-	public List<Transactions> findBycreditCardAndDate(String creditCardNumber, Date now) {
-		return transactionsRepository.findByCreditCard(creditCardNumber);
+	public List<Transactions> findByCreditCardAndDate(Transactions transactions){
+		
+		String creditCardNumber = Utils.maskCreditCard(transactions.getCreditCard());
+		List<Transactions> transactionsToday = transactionsRepository.findByCreditCardAndDate(creditCardNumber, transactions.getDate());
+		if(!transactionsToday.isEmpty()) {
+			return transactionsToday;
+		}
+		return transactionsToday;
 	}
+	
 	
 	
 
