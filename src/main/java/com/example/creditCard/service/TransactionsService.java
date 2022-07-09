@@ -55,13 +55,14 @@ public class TransactionsService {
 	}
 	
 	private void checkForFraud(Transactions transactions) {
-		
-		double sum = 0;
-		
+		checkBlackList(transactions);
 		List<Transactions> transactionsToday = findByCreditCardAndDate(transactions);
-		if(transactionsToday.size()+1 == MAX_TRANSACTION_PER_A_DAY) {
-			throw new FraudException("transactions is not valid , card hes passed his max transactions per a day  ");
-		}
+		checkTransactionsPerADay(transactionsToday);
+		checkAmountPerADay(transactions, transactionsToday);
+	}
+	
+	private void checkAmountPerADay(Transactions transactions ,List<Transactions> transactionsToday ) {
+		double sum = 0;
 		if(transactions.getAmount() >= MAX_AMOUNT_PER_A_DAY) {
 			throw new FraudException("transactions is not valid , card hes passed his max amount per a day  ");
 		}
@@ -73,7 +74,18 @@ public class TransactionsService {
 				throw new FraudException("transactions is not valid , card hes passed his max amount per a day  ");
 			}
 		}
-		
+	}
+	
+	private void checkTransactionsPerADay(List<Transactions> transactionsToday) {
+		if(transactionsToday.size()+1 > MAX_TRANSACTION_PER_A_DAY) {
+			throw new FraudException("transactions is not valid , card hes passed his max transactions per a day  ");
+		}
+	}
+	
+	private void checkBlackList(Transactions transactions) {
+		if(blackListService.findBlackListCard(transactions.getCreditCard())) {
+			throw new FraudException("transactions is not valid , card was found in black list !!!");
+		}
 	}
 	
 	private void checkLuhnValidetor(Transactions transactions) {
