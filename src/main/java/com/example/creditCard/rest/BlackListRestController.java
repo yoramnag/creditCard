@@ -48,9 +48,9 @@ public class BlackListRestController {
 	}
 	
 	@PostMapping("/blacklist")
-	public ResponseEntity<Object> createManager(@Valid @RequestBody BlackList blackList) {
+	public ResponseEntity<Object> createBlackListCard(@Valid @RequestBody BlackList blackList) {
 		blackList.setId(0);
-		BlackList savedBlackList = blackListService.saveblackListRepository(blackList);
+		BlackList savedBlackList = blackListService.saveBlackListRepository(blackList);
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(savedBlackList.getId())
 				.toUri();
 
@@ -58,15 +58,15 @@ public class BlackListRestController {
 	}
 	
 	@PutMapping("/blacklist")
-	public ResponseEntity<Object> updateManager(@Valid @RequestBody BlackList blackListCard) {
+	public ResponseEntity<Object> updateBlackListCard(@Valid @RequestBody BlackList blackListCard) {
 		if(blackListService.isBlaclListCardExist(blackListCard.getId())) {
-			blackListService.saveblackListRepository(blackListCard);
+			blackListService.saveBlackListRepository(blackListCard);
 		}
 		return ResponseEntity.ok().build();
 	}
 	
 	@DeleteMapping("/blacklist/{id}")
-	public ResponseEntity<Object> deleteManager(@PathVariable int id) {
+	public ResponseEntity<Object> deleteBlackListCard(@PathVariable int id) {
 		if(blackListService.isBlaclListCardExist(id)) {
 			blackListService.deleteBlaclListCard(id);
 		}
@@ -75,7 +75,6 @@ public class BlackListRestController {
 	
 	@GetMapping("/blacklistCard")
 	public boolean findCreditCard(@Valid @RequestBody BlackList blackListCard) {
-		System.out.println("in findCreditCard");
 		return blackListService.findBlackListCard(blackListCard.getCreditCard());
 	}
 	

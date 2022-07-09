@@ -29,7 +29,7 @@ public class BlackListService {
 		return blackList;
 	}
 	
-	public BlackList saveblackListRepository (BlackList blackList) {
+	public BlackList saveBlackListRepository (BlackList blackList) {
 		if (!Utils.luhnValidetor(blackList.getCreditCard())) {
 			throw new BlackListCardNotFoundException(blackList.getCreditCard() + "is not valid");
 		}
@@ -52,6 +52,7 @@ public class BlackListService {
 	
 	public boolean findBlackListCard(String creditCardNumber){
 		
+		creditCardNumber = Utils.maskCreditCard(creditCardNumber);
 		Optional<BlackList> blackList = blackListRepository.findByCreditCard(creditCardNumber);
 		if(!blackList.isPresent()) {
 			return false;
