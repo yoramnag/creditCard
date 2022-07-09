@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Size;
 
@@ -28,7 +30,8 @@ public class Transactions {
 	@DecimalMin(value = "1.0", message = "amount should be greater than 1")
 	private double amount ;
 	
-	@CreationTimestamp
+//	@CreationTimestamp
+	@Temporal(TemporalType.DATE)
 	private Date date;
 
 	public Transactions() {

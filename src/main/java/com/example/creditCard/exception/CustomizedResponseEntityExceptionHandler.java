@@ -24,17 +24,24 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 	}
 	
 	@ExceptionHandler(BlackListCardNotFoundException.class)
-	public final ResponseEntity<Object> handleManagerNotFoundException(BlackListCardNotFoundException ex, WebRequest request) {
+	public final ResponseEntity<Object> handleBlackListCardNotFoundException(BlackListCardNotFoundException ex, WebRequest request) {
 		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(),
 				request.getDescription(false));
 		return new ResponseEntity(exceptionResponse, HttpStatus.NOT_FOUND);
 	}
 	
 	@ExceptionHandler(TransactionsNotFoundException.class)
-	public final ResponseEntity<Object> handleManagerNotFoundException(TransactionsNotFoundException ex, WebRequest request) {
+	public final ResponseEntity<Object> handleTransactionsNotFoundException(TransactionsNotFoundException ex, WebRequest request) {
 		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(),
 				request.getDescription(false));
 		return new ResponseEntity(exceptionResponse, HttpStatus.NOT_FOUND);
+	}
+	
+	@ExceptionHandler(FraudException.class)
+	public final ResponseEntity<Object> handleFraudBadRequestException(FraudException ex, WebRequest request) {
+		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(),
+				request.getDescription(false));
+		return new ResponseEntity(exceptionResponse, HttpStatus.BAD_REQUEST);
 	}
 	
 	@Override
