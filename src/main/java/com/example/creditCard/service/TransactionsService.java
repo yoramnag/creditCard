@@ -42,9 +42,7 @@ public class TransactionsService {
 	
 	// Save new Transaction
 	public Transactions save (Transactions transactions) {
-		if (!Utils.luhnValidetor(transactions.getCreditCard())) {
-			throw new BlackListCardNotFoundException(transactions.getCreditCard() + "is not valid");
-		}
+		checkLuhnValidetor(transactions);
 		transactions.setDate(new Date());
 		checkForFraud(transactions);
 //		List<Transactions> transactionsToday = transactionsRepository.findByCreditCard(transactions.getCreditCard());
@@ -59,9 +57,7 @@ public class TransactionsService {
 	private void checkForFraud(Transactions transactions) {
 		
 		double sum = 0;
-		if(blackListService.findBlackListCard(transactions.getCreditCard())) {
-			throw new FraudException("transactions is not valid , card was found in black list !!!");
-		}
+		
 		List<Transactions> transactionsToday = findByCreditCardAndDate(transactions);
 		if(transactionsToday.size()+1 == MAX_TRANSACTION_PER_A_DAY) {
 			throw new FraudException("transactions is not valid , card hes passed his max transactions per a day  ");
@@ -80,6 +76,11 @@ public class TransactionsService {
 		
 	}
 	
+	private void checkLuhnValidetor(Transactions transactions) {
+		if (!Utils.luhnValidetor(transactions.getCreditCard())) {
+			throw new FraudException(Utils.mask(transactions.getCreditCard()) + " is not valid");
+		}
+	}
 	
 
 	// Delete Transaction
