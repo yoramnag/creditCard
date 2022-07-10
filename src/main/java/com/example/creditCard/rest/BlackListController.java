@@ -11,7 +11,7 @@ import com.example.creditCard.entity.BlackList;
 import com.example.creditCard.service.BlackListService;
 
 @Controller
-public class DemoController {
+public class BlackListController {
 	
 	@Autowired
 	private BlackListService blackListService;
