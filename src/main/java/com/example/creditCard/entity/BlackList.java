@@ -16,18 +16,21 @@ public class BlackList {
 	private int id;
 	
 	@Column(name="credit_card")
-	//@Size(min=16, max = 16 ,message="credit card size should be 16")
 	private String creditCard;
+	
+	@Column(name="mask_credit_card")
+	private String maskCreditCard;
 
 	public BlackList() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public BlackList(int id, String creditCard) {
+	public BlackList(int id, String creditCard, String maskCreditCard) {
 		super();
 		this.id = id;
 		this.creditCard = creditCard;
+		this.maskCreditCard = maskCreditCard;
 	}
 
 	public int getId() {
@@ -46,13 +49,17 @@ public class BlackList {
 		this.creditCard = creditCard;
 	}
 
-	@Override
-	public String toString() {
-		return "BlackList [id=" + id + ", creditCard=" + creditCard + "]";
+	public String getMaskCreditCard() {
+		return maskCreditCard;
 	}
 
-	
-	
-	
+	public void setMaskCreditCard(String maskCreditCard) {
+		this.maskCreditCard = maskCreditCard;
+	}
+
+	@Override
+	public String toString() {
+		return "BlackList [id=" + id + ", creditCard=" + creditCard + ", maskCreditCard=" + maskCreditCard + "]";
+	}
 
 }
