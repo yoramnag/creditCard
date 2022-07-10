@@ -4,6 +4,9 @@ import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.FieldPosition;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Utils {
 	
@@ -51,5 +54,15 @@ public class Utils {
         return res;
     	
     }
+    
+//    public static Date getCurrentDate() {
+//    	StringBuffer stringBuffer = new StringBuffer();
+//    	Date now = new Date();
+//    	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ");
+//    	simpleDateFormat.format(now, stringBuffer, new FieldPosition(0));
+//    	System.out.println(now);
+//		return null;
+//		
+//	}
 
 }
