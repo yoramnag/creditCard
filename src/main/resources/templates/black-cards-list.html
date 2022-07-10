@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Black List Directory</title>
+</head>
+
+<body>
+
+	<h3>Black List Directory</h3>
+	<hr>
+	
+	<table border="1">
+		<thead>
+			<tr>
+				<th>credit_card</th>
+				<th>mask_credit_card</th>
+			</tr>
+		</thead>
+		
+		<tbody>
+			<tr th:each="tempCreditCard : ${blaclListCards}">
+				<td th:text="${tempCreditCard.creditCard}" />	
+				<td th:text="${tempCreditCard.maskCreditCard}" />	
+			</tr>
+		</tbody>		
+	</table>
+	
+	
+</body>
+</html>
