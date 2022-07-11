@@ -33,7 +33,7 @@ public class TransactionsRestController {
 	
 	@Autowired
 	private TransactionsService transactionsService;
-	private static final SimpleDateFormat sdf2 = new SimpleDateFormat("dd-MM-yyyy-HH.mm.ss");
+//	private static final SimpleDateFormat sdf2 = new SimpleDateFormat("dd-MM-yyyy-HH.mm.ss");
 	
 	@GetMapping("/transactions")
 	public List<Transactions> retrieveAllTransactions(){
