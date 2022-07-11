@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.creditCard.entity.BlackList;
@@ -32,7 +34,16 @@ public class BlackListController {
 		
 		theModel.addAttribute("blaclListCard", blackList);
 		return "blackListHTMLPage/black-card-form";
+	}
+	
+	@PostMapping("/save")
+	public String saveBlackListCard(@ModelAttribute("blaclListCard") BlackList theCard) {
+		System.out.println("in save");
+		// save the employee
+		blackListService.saveBlackListRepository(theCard);
 		
+		// use a redirect to prevent duplicate submissions
+		return "redirect:/blaclListHTML/black-list-cards";
 	}
 }
 
