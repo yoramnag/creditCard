@@ -25,14 +25,12 @@
 	<table class="table table-bordered table-striped">
 		<thead class="thead-dark">
 			<tr>
-				<th>credit_card</th>
-				<th>mask_credit_card</th>
+				<th>Mask Credit Card</th>
 			</tr>
 		</thead>
 		
 		<tbody>
 			<tr th:each="tempCreditCard : ${blaclListCards}">
-				<td th:text="${tempCreditCard.creditCard}" />	
 				<td th:text="${tempCreditCard.maskCreditCard}" />	
 			</tr>
 		</tbody>		

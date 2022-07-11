@@ -1,4 +1,4 @@
-package com.example.creditCard.rest;
+package com.example.creditCard.controller;
 
 import java.util.List;
 
@@ -16,21 +16,11 @@ public class BlackListController {
 	@Autowired
 	private BlackListService blackListService;
 
-	// create a mapping for "/hello"
-	
-	@GetMapping("/hello")
-	public String sayHello(Model theModel) {
-		
-		theModel.addAttribute("theDate", new java.util.Date());
-		
-		return "helloworld";
-	}
-	
 	@GetMapping("/black-list-cards")
 	public String retrieveAllBlackListCards(Model theModel) {
 		List<BlackList> blackList = blackListService.findAll();
 		theModel.addAttribute("blaclListCards", blackList);
-		return "black-cards-list";
+		return "blackListHTML/black-cards-list";
 		
 	}
 }
