@@ -38,7 +38,6 @@ public class BlackListController {
 	
 	@PostMapping("/save")
 	public String saveBlackListCard(@ModelAttribute("blaclListCard") BlackList theCard) {
-		System.out.println("in save");
 		// save the employee
 		blackListService.saveBlackListRepository(theCard);
 		
