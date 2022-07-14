@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.example.creditCard.dao.BlackListRepository;
 import com.example.creditCard.entity.BlackList;
 import com.example.creditCard.exception.BlackListCardNotFoundException;
+import com.example.creditCard.exception.LuhnException;
 
 @Service
 public class BlackListService {
@@ -31,7 +32,7 @@ public class BlackListService {
 	
 	public BlackList saveBlackListRepository (BlackList blackList) {
 		if (!Utils.luhnValidetor(blackList.getCreditCard())) {
-			throw new BlackListCardNotFoundException(blackList.getCreditCard() + "is not valid");
+			throw new LuhnException(Utils.mask(blackList.getCreditCard()) + " is not valid");
 		}
 		blackList.setMaskCreditCard(Utils.mask(blackList.getCreditCard()));
 		blackList.setCreditCard(Utils.maskCreditCard(blackList.getCreditCard()));

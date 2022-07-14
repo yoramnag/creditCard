@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service;
 import com.example.creditCard.dao.TransactionsRepository;
 import com.example.creditCard.entity.BlackList;
 import com.example.creditCard.entity.Transactions;
-import com.example.creditCard.exception.BlackListCardNotFoundException;
 import com.example.creditCard.exception.FraudException;
+import com.example.creditCard.exception.LuhnException;
 import com.example.creditCard.exception.TransactionsNotFoundException;
 
 @Service
@@ -99,7 +99,7 @@ public class TransactionsService {
 	
 	private void checkLuhnValidetor(Transactions transactions) {
 		if (!Utils.luhnValidetor(transactions.getCreditCard())) {
-			throw new FraudException(Utils.mask(transactions.getCreditCard()) + " is not valid");
+			throw new LuhnException(Utils.mask(transactions.getCreditCard()) + " is not valid");
 		}
 	}
 	
