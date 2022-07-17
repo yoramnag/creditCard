@@ -17,10 +17,12 @@ public class BlackListService {
 	@Autowired
 	private BlackListRepository blackListRepository;
 	
+	// Return all BlackList
 	public List<BlackList> findAll(){
 		return blackListRepository.findAll();
 	}
 	
+	//Return BlackList card by his ID
 	public Optional<BlackList> findById(int id) {
 		Optional<BlackList> blackList = blackListRepository.findById(id);
 		
@@ -30,7 +32,9 @@ public class BlackListService {
 		return blackList;
 	}
 	
+	// Save new credit card to the black list 
 	public BlackList saveBlackListRepository (BlackList blackList) {
+		// Validate credit card with luhn algorithm 
 		if (!Utils.luhnValidetor(blackList.getCreditCard())) {
 			throw new LuhnException(Utils.mask(blackList.getCreditCard()) + " is not valid");
 		}
@@ -39,6 +43,7 @@ public class BlackListService {
 		return blackListRepository.save(blackList);
 	}
 	
+	// Check if credit card exist in blacklist
 	public boolean isBlaclListCardExist(int id) {
 		Optional<BlackList> BlackListCard = blackListRepository.findById(id);
 		
@@ -48,12 +53,13 @@ public class BlackListService {
 		return true;
 	}
 	
+	// Delete BlackList card
 	public void deleteBlaclListCard(int id) {
 		blackListRepository.deleteById(id);
 	}
 	
+	// Check if credit card number exist in blacklist
 	public boolean findBlackListCard(String creditCardNumber){
-		
 		creditCardNumber = Utils.maskCreditCard(creditCardNumber);
 		Optional<BlackList> blackList = blackListRepository.findByCreditCard(creditCardNumber);
 		if(!blackList.isPresent()) {

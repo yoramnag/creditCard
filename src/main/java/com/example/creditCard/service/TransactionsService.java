@@ -53,6 +53,7 @@ public class TransactionsService {
 		return transactionsRepository.save(transactions);
 	}
 	
+	// Check if the transaction is valid and it's not a fraud
 	private void checkForFraud(Transactions transactions) {
 		checkBlackList(transactions);
 		List<Transactions> transactionsToday = findByCreditCardAndDate(transactions);
@@ -60,6 +61,7 @@ public class TransactionsService {
 		checkAmountPerADay(transactions, transactionsToday);
 	}
 	
+	// Add card to the blacklist 
 	private void addCardToBlalList(Transactions transactions) {
 		BlackList blackList = new BlackList();
 		blackList.setCreditCard(transactions.getCreditCard());
@@ -67,11 +69,12 @@ public class TransactionsService {
 		
 	}
 	
+	// Check if the user pass the max amount per a day  
 	private void checkAmountPerADay(Transactions transactions ,List<Transactions> transactionsToday ) {
 		double sum = 0;
 		if(transactions.getAmount() >= MAX_AMOUNT_PER_A_DAY) {
 			addCardToBlalList(transactions);
-			throw new FraudException("transactions is not valid , card hes passed his max amount per a day  ");
+			throw new FraudException("transactions is not valid , card passed his max amount per a day  ");
 		}
 		if(transactionsToday.size() > 0) {
 			for (int i = 0; i < transactionsToday.size(); i++) {
@@ -79,24 +82,27 @@ public class TransactionsService {
 			}
 			if (sum >= MAX_AMOUNT_PER_A_DAY) {
 				addCardToBlalList(transactions);
-				throw new FraudException("transactions is not valid , card hes passed his max amount per a day  ");
+				throw new FraudException("transactions is not valid , card passed his max amount per a day  ");
 			}
 		}
 	}
 	
+	// Check if the user pass the max transaction per a day  
 	private void checkTransactionsPerADay(List<Transactions> transactionsToday, Transactions transactions) {
 		if(transactionsToday.size()+1 > MAX_TRANSACTION_PER_A_DAY) {
 			addCardToBlalList(transactions);
-			throw new FraudException("transactions is not valid , card hes passed his max transactions per a day  ");
+			throw new FraudException("transactions is not valid , card passed his max transactions per a day  ");
 		}
 	}
 	
+	// Check if credit card i on blacklist
 	private void checkBlackList(Transactions transactions) {
 		if(blackListService.findBlackListCard(transactions.getCreditCard())) {
 			throw new FraudException("transactions is not valid , card was found in black list !!!");
 		}
 	}
 	
+	// Validate credit card with luhn algorithm
 	private void checkLuhnValidetor(Transactions transactions) {
 		if (!Utils.luhnValidetor(transactions.getCreditCard())) {
 			throw new LuhnException(Utils.mask(transactions.getCreditCard()) + " is not valid");
@@ -109,6 +115,7 @@ public class TransactionsService {
 		transactionsRepository.deleteById(id);
 	}
 	
+	// Check if transactions exist in the database
 	public boolean isTransactionExist(int id) {
 		Optional<Transactions> transactions = transactionsRepository.findById(id);
 		
@@ -118,6 +125,7 @@ public class TransactionsService {
 		return true;
 	}
 	
+	// Get the user transactions for a given date
 	public List<Transactions> findByCreditCardAndDate(Transactions transactions){
 		
 		String creditCardNumber = Utils.maskCreditCard(transactions.getCreditCard());
